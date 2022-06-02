@@ -322,6 +322,7 @@ public class BlueThermalPrinterPlugin implements FlutterPlugin, ActivityAware,Me
           int size = (int) arguments.get("size");
           int align = (int) arguments.get("align");
           String charset = (String) arguments.get("charset");
+          THREAD.write(PrinterCommands.ENC_UTF8);
           printCustom(result, message, size, align, charset);
         } else {
           result.error("invalid_argument", "argument 'message' not found", null);
@@ -671,12 +672,12 @@ public class BlueThermalPrinterPlugin implements FlutterPlugin, ActivityAware,Me
   }
 
   private void printLeftRight(Result result, String msg1, String msg2, int size ,String charset,String format) {
-    byte[] cc = new byte[] { 0x1B, 0x21, 0x03 }; // 0- normal size text
-    // byte[] cc1 = new byte[]{0x1B,0x21,0x00}; // 0- normal size text
-    byte[] bb = new byte[] { 0x1B, 0x21, 0x08 }; // 1- only bold text
-    byte[] bb2 = new byte[] { 0x1B, 0x21, 0x20 }; // 2- bold with medium text
-    byte[] bb3 = new byte[] { 0x1B, 0x21, 0x10 }; // 3- bold with large text
-    byte[] bb4 = new byte[] { 0x1B, 0x21, 0x30 }; // 4- strong text
+    byte[] cc = new byte[] { 0x1C, 0x21, 0x03 }; // 0- normal size text
+    // byte[] cc1 = new byte[]{0x1C,0x21,0x00}; // 0- normal size text
+    byte[] bb = new byte[] { 0x1C, 0x21, 0x08 }; // 1- only bold text
+    byte[] bb2 = new byte[] { 0x1C, 0x21, 0x20 }; // 2- bold with medium text
+    byte[] bb3 = new byte[] { 0x1C, 0x21, 0x10 }; // 3- bold with large text
+    byte[] bb4 = new byte[] { 0x1C, 0x21, 0x30 }; // 4- strong text
     if (THREAD == null) {
       result.error("write_error", "not connected", null);
       return;
